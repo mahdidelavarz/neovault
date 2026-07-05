@@ -60,7 +60,14 @@ services:
     depends_on:
       - frontend
       - backend
+    networks:
+      - default
+      - web-proxy
     restart: unless-stopped
 
 volumes:
   postgres_data:
+
+networks:
+  web-proxy:
+    external: true
