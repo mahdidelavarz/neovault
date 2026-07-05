@@ -4,7 +4,6 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Icon } from "@iconify/react";
 import {
   useCollections,
   useEndpoints,
@@ -44,7 +43,12 @@ import Input from "@/features/shared/ui/Input";
 import Textarea from "@/features/shared/ui/TextArea";
 import Alert from "@/features/shared/ui/Alert";
 import TagSelector from "@/features/tags/components/TagSelector";
-import { LucideFolder, LucideType } from "@/Icons/Icons";
+import {
+  LucideFolder, LucideType, LucidePanelLeft, LucideLayers, LucideMoreHorizontal,
+  LucidePlus, LucideClock3, LucideX, LucideSend, LucideInbox, LucideCheck,
+  LucideStar, LucideChevronDown, LucideSettings2, LucideSave, LucideBookmarkPlus,
+  LucideTerminal, LucideTrash2,
+} from "@/Icons/Icons";
 import FormLayout from "@/features/shared/layout/FormLayout";
 import FormSelect from "@/features/snippets/components/FormSelect";
 
@@ -581,7 +585,7 @@ export default function ApiClientPage() {
             onClick={() => setMobileSidebarOpen(true)}
             aria-label="Open collections"
           >
-            <Icon icon="lucide:panel-left" width={18} />
+            <LucidePanelLeft width={18} />
           </button>
           <span className="acp-mobile-title">API Client</span>
           {activeEnv && (
@@ -589,7 +593,7 @@ export default function ApiClientPage() {
               className="acp-mobile-env"
               title={`Environment: ${activeEnv.name}`}
             >
-              <Icon icon="lucide:layers" width={11} />
+              <LucideLayers width={11} />
               {activeEnv.name}
             </span>
           )}
@@ -598,14 +602,14 @@ export default function ApiClientPage() {
             onClick={() => setActionsSheetOpen(true)}
             aria-label="More actions"
           >
-            <Icon icon="lucide:more-horizontal" width={18} />
+            <LucideMoreHorizontal width={18} />
           </button>
           <button
             className="acp-new-btn"
             onClick={handleNewRequest}
             aria-label="New request"
           >
-            <Icon icon="lucide:plus" width={18} />
+            <LucidePlus width={18} />
           </button>
         </div>
 
@@ -628,13 +632,13 @@ export default function ApiClientPage() {
           <div className="acp-right" ref={rightRef} data-mobile-tab={mobileTab}>
             {draftRestored && (
               <div className="acp-draft-notice">
-                <Icon icon="lucide:clock-3" width={13} />
+                <LucideClock3 width={13} />
                 Draft restored from your last session
                 <button
                   className="acp-draft-dismiss"
                   onClick={() => setDraftRestored(false)}
                 >
-                  <Icon icon="lucide:x" width={12} />
+                  <LucideX width={12} />
                 </button>
               </div>
             )}
@@ -650,7 +654,7 @@ export default function ApiClientPage() {
                   .join(" ")}
                 onClick={() => setMobileTab("request")}
               >
-                <Icon icon="lucide:send" width={14} />
+                <LucideSend width={14} />
                 Request
               </button>
               <button
@@ -662,7 +666,7 @@ export default function ApiClientPage() {
                   .join(" ")}
                 onClick={() => setMobileTab("response")}
               >
-                <Icon icon="lucide:inbox" width={14} />
+                <LucideInbox width={14} />
                 Response
                 {response && (
                   <span
@@ -843,7 +847,7 @@ export default function ApiClientPage() {
                     .filter(Boolean)
                     .join(" ")}
                 >
-                  {field.value && <Icon icon="lucide:check" width={11} />}
+                  {field.value && <LucideCheck width={11} />}
                 </div>
                 <input
                   type="checkbox"
@@ -856,11 +860,7 @@ export default function ApiClientPage() {
                   }}
                 />
                 <span className="save-form-check-label">
-                  <Icon
-                    icon="lucide:star"
-                    width={13}
-                    style={{ color: "#fbbf24" }}
-                  />
+                  <LucideStar width={13} style={{ color: "#fbbf24" }} />
                   Mark as favorite
                 </span>
               </label>
@@ -923,7 +923,7 @@ export default function ApiClientPage() {
             <label className="acp-sheet-label">Environment</label>
             <div className="acp-sheet-env-row">
               <div className="acp-sheet-env-pill">
-                <Icon icon="lucide:layers" width={13} />
+                <LucideLayers width={13} />
                 <select
                   className="acp-sheet-env-select"
                   value={activeEnvId ?? ""}
@@ -957,7 +957,7 @@ export default function ApiClientPage() {
                     </optgroup>
                   )}
                 </select>
-                <Icon icon="lucide:chevron-down" width={12} />
+                <LucideChevronDown width={12} />
               </div>
             </div>
             <button
@@ -967,7 +967,7 @@ export default function ApiClientPage() {
                 setEnvModalOpen(true);
               }}
             >
-              <Icon icon="lucide:settings-2" width={16} />
+              <LucideSettings2 width={16} />
               Manage environments
             </button>
           </div>
@@ -982,10 +982,7 @@ export default function ApiClientPage() {
               openSave();
             }}
           >
-            <Icon
-              icon={selectedEndpoint ? "lucide:save" : "lucide:bookmark-plus"}
-              width={16}
-            />
+            {selectedEndpoint ? <LucideSave width={16} /> : <LucideBookmarkPlus width={16} />}
             {selectedEndpoint ? "Update" : "Save"}
           </button>
           <button
@@ -995,7 +992,7 @@ export default function ApiClientPage() {
               setImportCurlOpen(true);
             }}
           >
-            <Icon icon="lucide:terminal" width={16} />
+            <LucideTerminal width={16} />
             Import cURL
           </button>
           {selectedEndpoint && (
@@ -1006,7 +1003,7 @@ export default function ApiClientPage() {
                 setConfirmDel(true);
               }}
             >
-              <Icon icon="lucide:trash-2" width={16} />
+              <LucideTrash2 width={16} />
               Delete endpoint
             </button>
           )}

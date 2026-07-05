@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Icon } from '@iconify/react'
+import { LucideCheck, LucideCopy } from '@/Icons/Icons'
 import Modal from '@/features/shared/ui/Modal'
 import Button from '@/features/shared/ui/Button'
 import { generateCode, CODE_FORMATS, type CodeFormat, type RequestSnapshot } from '@/features/postman/utils/apiCodegen'
@@ -44,7 +44,7 @@ export default function GenerateCodeModal({ isOpen, onClose, request }: Props) {
         <pre className="gcm-code"><code>{code}</code></pre>
         <div className="gcm-actions">
           <Button type="button" variant="secondary" onClick={handleCopy}>
-            <Icon icon={copied ? 'lucide:check' : 'lucide:copy'} width={14} />
+            {copied ? <LucideCheck width={14} /> : <LucideCopy width={14} />}
             {copied ? 'Copied' : 'Copy code'}
           </Button>
         </div>

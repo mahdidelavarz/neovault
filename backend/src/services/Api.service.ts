@@ -4,8 +4,21 @@ import { ApiCollection } from '../entities/ApiCollection';
 import { ApiEnvironment } from '../entities/ApiEnvironment';
 import { Taggable } from '../entities/Taggable';
 import { encrypt, decrypt } from '../utils/crypto';
-import { validateRequestUrl } from '../utils/ssrf.util';
+import { validateRequestUrl, isPrivateHostname } from '../utils/ssrf.util';
 import axios from 'axios';
+
+/** Cap the proxied response so a huge/malicious target can't exhaust server memory. */
+const MAX_RESPONSE_BYTES = 10 * 1024 * 1024; // 10 MB
+
+/** How long the outbound request may take before we abort it. */
+const REQUEST_TIMEOUT_MS = 30_000;
+
+/** Tag an error as a client (4xx) error so the global handler responds with `status`. */
+function clientError(message: string, status = 400): Error {
+    const err = new Error(message) as Error & { status: number };
+    err.status = status;
+    return err;
+}
 
 export class ApiService {
     private endpointRepository = AppDataSource.getRepository(ApiEndpoint);
@@ -186,8 +199,29 @@ export class ApiService {
         authType?: string;
         authData?: any;
     }) {
-        // P0-1: Block SSRF — validate URL before making any outbound request
-        await validateRequestUrl(data.url);
+        const method = (data.method || 'GET').toUpperCase();
+
+        // Parse the JSON body up front so a syntax error is a clean 400, not a 500.
+        let requestData: any;
+        if (data.body && method !== 'GET' && method !== 'HEAD') {
+            if (data.bodyType === 'json') {
+                try {
+                    requestData = JSON.parse(data.body);
+                } catch {
+                    throw clientError('Request body is not valid JSON.');
+                }
+            } else {
+                requestData = data.body;
+            }
+        }
+
+        // P0-1: Block SSRF — validate URL before making any outbound request.
+        // Validation failures are the caller's fault (bad/blocked URL) → 400, not 500.
+        try {
+            await validateRequestUrl(data.url);
+        } catch (err: any) {
+            throw clientError(err?.message || 'Invalid request URL.');
+        }
 
         const startTime = Date.now();
 
@@ -196,19 +230,32 @@ export class ApiService {
             const authHeaders = this.buildAuthHeaders(data.authType, data.authData);
 
             const config: any = {
-                method: data.method.toLowerCase(),
+                method: method.toLowerCase(),
                 url: data.url,
-                // Auth headers are applied first; explicit headers can override them
-                headers: { ...authHeaders, ...(data.headers ?? {}) },
+                // Send browser-like defaults first. Many WAF-protected hosts silently
+                // stall (→ timeout) on the default "axios/x.y" User-Agent even though
+                // the same request succeeds from Postman/a browser. Auth headers, then
+                // the caller's explicit headers, override these defaults.
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+                    'Accept': '*/*',
+                    ...authHeaders,
+                    ...(data.headers ?? {}),
+                },
                 validateStatus: () => true,
-                timeout: 30000,
+                timeout: REQUEST_TIMEOUT_MS,
+                maxContentLength: MAX_RESPONSE_BYTES,
+                maxBodyLength: MAX_RESPONSE_BYTES,
+                // Re-check every redirect hop: a public URL can 3xx to an internal
+                // address. beforeRedirect is synchronous, so we use the literal-IP guard.
+                beforeRedirect: (options: any) => {
+                    if (isPrivateHostname(options.hostname || options.host || '')) {
+                        throw clientError('Redirect to a private or internal address was blocked.');
+                    }
+                },
             };
 
-            if (data.body && data.method !== 'GET') {
-                config.data = data.bodyType === 'json'
-                    ? JSON.parse(data.body)
-                    : data.body;
-            }
+            if (requestData !== undefined) config.data = requestData;
 
             const response = await axios(config);
             const elapsed = Date.now() - startTime;
@@ -223,21 +270,43 @@ export class ApiService {
                 headers: response.headers as Record<string, string>,
                 body: responseBody,
                 time: elapsed,
-                size: new Blob([responseBody]).size,
+                size: Buffer.byteLength(responseBody, 'utf8'),
             };
         } catch (error: any) {
             const elapsed = Date.now() - startTime;
+
+            // The target responded, just with an error status axios rejected on.
             if (error.response) {
+                const body = typeof error.response.data === 'object'
+                    ? JSON.stringify(error.response.data, null, 2)
+                    : String(error.response.data ?? '');
                 return {
                     status: error.response.status,
                     statusText: error.response.statusText,
-                    headers: error.response.headers,
-                    body: JSON.stringify(error.response.data, null, 2),
+                    headers: error.response.headers as Record<string, string>,
+                    body,
                     time: elapsed,
-                    size: 0,
+                    size: Buffer.byteLength(body, 'utf8'),
                 };
             }
-            throw error;
+
+            // A blocked redirect is a client error → surface it as 400.
+            if ((error as any).status) throw error;
+
+            // No response: DNS failure, connection refused, timeout, size cap, etc.
+            // This is about the *target* the user typed, not our server — return a
+            // Postman-style 0-status result rather than a misleading 500.
+            const reason = error.code === 'ECONNABORTED'
+                ? `Request to target timed out after ${REQUEST_TIMEOUT_MS / 1000}s`
+                : (error.message || 'Could not connect to the target server');
+            return {
+                status: 0,
+                statusText: error.code || 'Network Error',
+                headers: {},
+                body: JSON.stringify({ error: reason }, null, 2),
+                time: elapsed,
+                size: 0,
+            };
         }
     }
 

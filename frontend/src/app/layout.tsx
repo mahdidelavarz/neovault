@@ -9,37 +9,13 @@ export const metadata: Metadata = {
 
   // iOS PWA — these generate the required <meta> and <link> tags that Safari reads.
   // iOS ignores the web manifest for icons/splash; these explicit entries are mandatory.
+  // No startupImage entries: the splash PNGs were never produced, so listing them only
+  // emitted apple-touch-startup-image <link>s that 404'd. iOS falls back to a solid
+  // background_color splash (from the manifest), which is acceptable.
   appleWebApp: {
     capable: true,
     title: "NeoVault",
     statusBarStyle: "black-translucent",
-    startupImage: [
-      // iPhone 14 Pro Max  (430×932  @3×)
-      {
-        url: "/splash/splash-1290x2796.png",
-        media: "(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3)",
-      },
-      // iPhone 14 / 13 / 12  (390×844  @3×)
-      {
-        url: "/splash/splash-1170x2532.png",
-        media: "(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)",
-      },
-      // iPhone 11 / XR  (414×896  @2×)
-      {
-        url: "/splash/splash-828x1792.png",
-        media: "(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)",
-      },
-      // iPhone SE 3rd gen  (375×667  @2×)
-      {
-        url: "/splash/splash-750x1334.png",
-        media: "(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)",
-      },
-      // iPad Pro 12.9″  (1024×1366  @2×)
-      {
-        url: "/splash/splash-2048x2732.png",
-        media: "(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)",
-      },
-    ],
   },
 
   icons: {

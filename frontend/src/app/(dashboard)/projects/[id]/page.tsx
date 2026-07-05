@@ -156,7 +156,8 @@ export default function ProjectDashboardPage() {
                                 <Button variant="ghost" size="sm" onClick={() => setConfirmDelete(true)}>
                                     <LucideTrash2 width={14} />
                                 </Button>
-                                <Button size="sm" onClick={() => setAddItemOpen(true)}>
+                                <Button size="sm" onClick={() => setAddItemOpen(true)}
+                                    style={{ '--accent': accentColor, '--accent-hover': accentColor } as React.CSSProperties}>
                                     <LucidePlus width={14} />
                                     Add items
                                 </Button>
@@ -190,7 +191,8 @@ export default function ProjectDashboardPage() {
                         title={filter === 'all' ? 'No items yet' : `No ${ITEM_TYPE_LABELS[filter as ProjectItemType]} yet`}
                         subtitle={filter === 'all' ? 'Click "Add items" to add links, notes, snippets, and more.' : 'Try switching to "All" or add items of this type.'}
                         action={filter === 'all' ? (
-                            <Button onClick={() => setAddItemOpen(true)}>
+                            <Button onClick={() => setAddItemOpen(true)}
+                                style={{ '--accent': accentColor, '--accent-hover': accentColor } as React.CSSProperties}>
                                 <LucidePlus width={14} />
                                 Add items
                             </Button>

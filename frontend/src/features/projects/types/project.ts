@@ -1,4 +1,4 @@
-export type ProjectItemType = 'link' | 'note' | 'snippet' | 'prompt' | 'infrastructure';
+export type ProjectItemType = 'link' | 'note' | 'snippet' | 'prompt' | 'infrastructure' | 'file';
 
 export interface Project {
     id: number;
@@ -51,4 +51,5 @@ export const ITEM_TYPE_LABELS: Record<ProjectItemType, string> = {
     snippet: 'Snippets',
     prompt: 'Prompts',
     infrastructure: 'Infra',
+    file: 'Files',
 };

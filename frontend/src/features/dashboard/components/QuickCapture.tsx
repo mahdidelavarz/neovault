@@ -12,10 +12,10 @@ import {
 } from "@/features/snippets/utils/languageDetector";
 import { type SnippetType } from "@/features/snippets/types/snippet";
 import {
-  LucideSparkles,
-  LucideClipboardCheck,
-  LucideFolder,
-  LucideTag,
+  SolarSparklesLineDuotone,
+  SolarClipboardCheckLineDuotone,
+  SolarFolderWithFilesOutline,
+  SolarTagLineDuotone,
   LucideArrowRight,
 } from "@/Icons/Icons";
 import SnippetForm from "@/features/snippets/components/SnippetForm";
@@ -84,7 +84,7 @@ export default function QuickCapture() {
       <style>{CSS}</style>
       <div className="qc-section dp-quick-section dp-card">
         <div className="dp-card-header">
-          <LucideSparkles width={14} className="dp-card-header-icon" />
+          <SolarSparklesLineDuotone width={14} className="dp-card-header-icon" />
           <h2 className="dp-card-title">Quick capture</h2>
         </div>
 
@@ -105,7 +105,7 @@ export default function QuickCapture() {
               type="button"
               variant="secondary"
               size="md"
-              leftIcon={LucideClipboardCheck}
+              leftIcon={SolarClipboardCheckLineDuotone}
               onClick={handleCheckClipboard}
             >
               Check clipboard
@@ -123,8 +123,8 @@ export default function QuickCapture() {
 
         <div className="dp-nav-links">
           {[
-            { label: "Categories", href: "/categories", icon: LucideFolder },
-            { label: "Tags", href: "/tags", icon: LucideTag },
+            { label: "Categories", href: "/categories", icon: SolarFolderWithFilesOutline },
+            { label: "Tags", href: "/tags", icon: SolarTagLineDuotone },
           ].map((n) => (
             <Link key={n.href} href={n.href} className="dp-nav-link">
               <n.icon width={13} />

@@ -9,18 +9,16 @@ import QuickCapture from "@/features/dashboard/components/QuickCapture";
 import RecentActivityGrid from "@/features/dashboard/components/RecentActivityGrid";
 import {
   LucideArrowRight,
-  LucideBarChart3,
-  LucideFileCode2,
-  LucideFileText,
-  LucideFolder,
-  LucideGlobe,
-  LucideLink2,
-  LucideMessageSquare,
-  LucideServer,
   LucideStar,
-  LucideTag,
-  LucideVault,
-  LucideZap,
+  SolarLinkMinimalisticBold,
+  SolarNotesLineDuotone,
+  SolarCodeSquareLineDuotone,
+  SolarFolderWithFilesOutline,
+  SolarGlobalLinear,
+  FluentPrompt16Regular,
+  SolarServerSquareCloudLinear,
+  SolarTagLineDuotone,
+  SolarBoltLineDuotone,
 } from "@/Icons/Icons";
 import WelcomeBanner from "@/features/dashboard/components/WelcomeBanner";
 
@@ -31,55 +29,55 @@ const MODULES = [
     key: "links",
     label: "Links",
     href: "/links",
-    icon: LucideLink2,
-    color: "var(--cyan-400)",
-    bg: "var(--accent-muted)",
-    border: "var(--accent-border)",
+    icon: SolarLinkMinimalisticBold,
+    color: "var(--type-link)",
+    bg: "color-mix(in srgb, var(--type-link) 10%, transparent)",
+    border: "color-mix(in srgb, var(--type-link) 22%, transparent)",
   },
   {
     key: "notes",
     label: "Notes",
     href: "/notes",
-    icon: LucideFileText,
-    color: "#10b981",
-    bg: "rgba(16,185,129,0.08)",
-    border: "rgba(16,185,129,0.2)",
+    icon: SolarNotesLineDuotone,
+    color: "var(--type-note)",
+    bg: "color-mix(in srgb, var(--type-note) 10%, transparent)",
+    border: "color-mix(in srgb, var(--type-note) 22%, transparent)",
   },
   {
     key: "snippets",
     label: "Snippets",
     href: "/snippets",
-    icon: LucideFileCode2,
-    color: "#8b5cf6",
-    bg: "rgba(139,92,246,0.08)",
-    border: "rgba(139,92,246,0.2)",
+    icon: SolarCodeSquareLineDuotone,
+    color: "var(--type-snippet)",
+    bg: "color-mix(in srgb, var(--type-snippet) 10%, transparent)",
+    border: "color-mix(in srgb, var(--type-snippet) 22%, transparent)",
   },
   {
     key: "prompts",
     label: "Prompts",
     href: "/prompts",
-    icon: LucideMessageSquare,
-    color: "#f59e0b",
-    bg: "rgba(245,158,11,0.08)",
-    border: "rgba(245,158,11,0.2)",
+    icon: FluentPrompt16Regular,
+    color: "var(--type-prompt)",
+    bg: "color-mix(in srgb, var(--type-prompt) 10%, transparent)",
+    border: "color-mix(in srgb, var(--type-prompt) 22%, transparent)",
   },
   {
     key: "infrastructure",
     label: "Infrastructure",
     href: "/infrastructure",
-    icon: LucideServer,
-    color: "#3b82f6",
-    bg: "rgba(59,130,246,0.08)",
-    border: "rgba(59,130,246,0.2)",
+    icon: SolarServerSquareCloudLinear,
+    color: "var(--type-infra)",
+    bg: "color-mix(in srgb, var(--type-infra) 10%, transparent)",
+    border: "color-mix(in srgb, var(--type-infra) 22%, transparent)",
   },
   {
     key: "api",
     label: "API Client",
     href: "/api-client",
-    icon: LucideGlobe,
-    color: "#ec4899",
-    bg: "rgba(236,72,153,0.08)",
-    border: "rgba(236,72,153,0.2)",
+    icon: SolarGlobalLinear,
+    color: "var(--type-api)",
+    bg: "color-mix(in srgb, var(--type-api) 10%, transparent)",
+    border: "color-mix(in srgb, var(--type-api) 22%, transparent)",
   },
 ];
 
@@ -221,17 +219,17 @@ export default function DashboardPage() {
             <span>Favorites</span>
           </div>
           <div className="dp-chip dp-chip--cyan">
-            <LucideFolder width={12} />
+            <SolarFolderWithFilesOutline width={12} />
             <strong>{isLoading ? "—" : (stats?.categories.total ?? 0)}</strong>
             <span>Categories</span>
           </div>
           <div className="dp-chip dp-chip--violet">
-            <LucideTag width={12} />
+            <SolarTagLineDuotone width={12} />
             <strong>{isLoading ? "—" : (stats?.tags.total ?? 0)}</strong>
             <span>Tags</span>
           </div>
           <div className="dp-chip dp-chip--subtle">
-            <LucideZap width={12} />
+            <SolarBoltLineDuotone width={12} />
             <strong>{isLoading ? "—" : totalItems}</strong>
             <span>Total</span>
           </div>

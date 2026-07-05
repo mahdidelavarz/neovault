@@ -122,4 +122,13 @@ const CSS = `
   border-color: rgba(236,72,153,0.25);
   color:        #f472b6;
 }
+
+/* Light mode — darker text for readability on white */
+[data-theme="light"] .badge--cyan    { color: var(--text-accent); }
+[data-theme="light"] .badge--success { color: #059669; }
+[data-theme="light"] .badge--warning { color: #d97706; }
+[data-theme="light"] .badge--danger  { color: #dc2626; }
+[data-theme="light"] .badge--purple  { color: #7c3aed; }
+[data-theme="light"] .badge--orange  { color: #ea580c; }
+[data-theme="light"] .badge--pink    { color: #db2777; }
 `

@@ -1,11 +1,11 @@
 import Link from "next/link";
 import {
-  LucideLink2,
-  LucideNotebookPen,
-  LucideMessageSquare,
+  SolarLinkMinimalisticBold,
+  SolarNotesLineDuotone,
+  FluentPrompt16Regular,
   LucideStar,
   LucidePin,
-  LucideCodeXml,
+  SolarCodeSquareLineDuotone,
 } from "@/Icons/Icons";
 
 interface StatCardProps {
@@ -22,15 +22,15 @@ interface StatCardProps {
 }
 
 const iconMap = {
-  link: LucideLink2,
-  note: LucideNotebookPen,
-  snippet: LucideCodeXml,
-  prompt: LucideMessageSquare,
+  link:    SolarLinkMinimalisticBold,
+  note:    SolarNotesLineDuotone,
+  snippet: SolarCodeSquareLineDuotone,
+  prompt:  FluentPrompt16Regular,
 };
 
 const subIconMap = {
   star: LucideStar,
-  pin: LucidePin,
+  pin:  LucidePin,
 };
 
 const variantStyles = {

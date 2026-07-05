@@ -31,6 +31,18 @@ function isPrivateIp(ip: string): boolean {
 }
 
 /**
+ * Synchronous guard for a hostname taken from a redirect target. DNS resolution
+ * isn't possible here (redirect hooks are sync), so this blocks the obvious cases:
+ * localhost and literal private / link-local IPs (e.g. the 169.254.169.254 metadata
+ * endpoint). The initial hop still gets the full DNS-based check in validateRequestUrl.
+ */
+export function isPrivateHostname(hostname: string): boolean {
+    const h = (hostname || '').toLowerCase().replace(/^\[|\]$/g, '');
+    if (!h || h === 'localhost' || h === '0.0.0.0') return true;
+    return isPrivateIp(h);
+}
+
+/**
  * Validates that a URL is safe to proxy.
  * Throws a descriptive Error if the URL is invalid or targets a private/internal address.
  */

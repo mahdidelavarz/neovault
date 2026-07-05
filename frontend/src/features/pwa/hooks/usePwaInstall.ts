@@ -12,6 +12,7 @@ export function usePwaInstall() {
   const [isInstalled,   setIsInstalled]   = useState(false);
   const [isIos,         setIsIos]         = useState(false);
   const [isStandalone,  setIsStandalone]  = useState(false);
+  const [isUnsupportedInstallBrowser, setIsUnsupportedInstallBrowser] = useState(false);
 
   useEffect(() => {
     // Detect if already running as installed PWA
@@ -20,8 +21,19 @@ export function usePwaInstall() {
       (window.navigator as any).standalone === true;
     setIsStandalone(standalone);
 
+    const ua = navigator.userAgent;
+
     // Detect iOS (Safari on iPhone/iPad/iPod)
-    setIsIos(/iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream);
+    setIsIos(/iPad|iPhone|iPod/.test(ua) && !(window as any).MSStream);
+
+    // Detect Android browsers that can't produce a standalone install (WebAPK):
+    // Firefox and Opera never fire `beforeinstallprompt` and only create a plain
+    // home-screen shortcut that opens inside the browser. Chrome/Edge/Samsung do
+    // mint WebAPKs, so they're excluded (they go through `canInstall` instead).
+    const isAndroid = /Android/i.test(ua);
+    const isFirefox = /Firefox|FxiOS/i.test(ua);
+    const isOpera = /OPR\/|Opera/i.test(ua);
+    setIsUnsupportedInstallBrowser(isAndroid && (isFirefox || isOpera));
 
     // Capture the browser's native install prompt (Android Chrome/Edge)
     const handleBeforeInstall = (e: Event) => {
@@ -61,6 +73,8 @@ export function usePwaInstall() {
     isInstalled,
     /** Running on iOS Safari */
     isIos,
+    /** Android Firefox/Opera: can't produce a standalone install (no WebAPK) */
+    isUnsupportedInstallBrowser,
     /** Already running as installed PWA (standalone mode) */
     isStandalone,
     /** Trigger the Android install dialog */

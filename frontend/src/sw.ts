@@ -2,7 +2,6 @@
 
 import { defaultCache } from "@serwist/next/worker";
 import {
-  NetworkFirst,
   NetworkOnly,
   StaleWhileRevalidate,
   Serwist,
@@ -36,13 +35,15 @@ const serwist = new Serwist({
       handler: new NetworkOnly(),
     },
 
-    // All other API routes: try network first (5 s timeout), fall back to cache.
+    // All other API routes: go straight to the network. We deliberately do NOT
+    // use NetworkFirst here: its networkTimeoutSeconds races the request against a
+    // timer, and if the timer wins with no cached copy the SW rejects the request
+    // with "a ServiceWorker intercepted the request and encountered an unexpected
+    // error". Authenticated API responses shouldn't be SW-cached anyway — offline
+    // reads are served from the React Query IndexedDB persister (see dev_pwa.md).
     {
       matcher: ({ url }) => url.pathname.startsWith("/api/"),
-      handler: new NetworkFirst({
-        networkTimeoutSeconds: 5,
-        cacheName: "linkvault-api",
-      }),
+      handler: new NetworkOnly(),
     },
 
     // Images: serve from cache, refresh in background.

@@ -1,7 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { Icon } from '@iconify/react'
+import {
+  LucideFolderPlus, LucideX, SvgSpinnersRingResize, LucideCheck,
+  LucideRadio, LucideChevronRight, LucideChevronDown, LucideFolder,
+  LucideTrash2, LucidePlus, LucideStar,
+} from '@/Icons/Icons'
 import { type ApiEndpoint, type ApiCollection, type HttpMethod, METHOD_COLORS } from '@/features/postman/types/apiClient'
 import { useCreateCollection, useDeleteCollection } from '@/features/postman/hooks/useApiClient'
 
@@ -70,10 +74,10 @@ export default function CollectionSidebar({
           <span className="csb-title">Collections</span>
           <div className="csb-header-actions">
             <button className="csb-icon-btn" onClick={() => setShowNewColl((p) => !p)} aria-label="New collection">
-              <Icon icon="lucide:folder-plus" width={15} />
+              <LucideFolderPlus width={15} />
             </button>
             <button className="csb-icon-btn csb-close-btn" onClick={onMobileClose} aria-label="Close">
-              <Icon icon="lucide:x" width={15} />
+              <LucideX width={15} />
             </button>
           </div>
         </div>
@@ -94,10 +98,10 @@ export default function CollectionSidebar({
               onClick={handleCreateCollection}
               disabled={!collName.trim() || createCollection.isPending}
             >
-              <Icon icon={createCollection.isPending ? 'svg-spinners:ring-resize' : 'lucide:check'} width={14} />
+              {createCollection.isPending ? <SvgSpinnersRingResize width={14} /> : <LucideCheck width={14} />}
             </button>
             <button className="csb-coll-cancel" onClick={() => { setShowNewColl(false); setCollName('') }}>
-              <Icon icon="lucide:x" width={14} />
+              <LucideX width={14} />
             </button>
           </div>
         )}
@@ -108,7 +112,7 @@ export default function CollectionSidebar({
             className={['csb-all-btn', !selectedCollection ? 'csb-all-btn--active' : ''].filter(Boolean).join(' ')}
             onClick={() => { onSelectCollection(null); onMobileClose() }}
           >
-            <Icon icon="lucide:radio" width={14} />
+            <LucideRadio width={14} />
             <span>All Endpoints</span>
             <span className="csb-count">{endpoints?.length ?? 0}</span>
           </button>
@@ -134,9 +138,9 @@ export default function CollectionSidebar({
                     onClick={(e) => { e.stopPropagation(); toggleCollapse(col.id) }}
                     aria-label="Collapse"
                   >
-                    <Icon icon={isCollapsed ? 'lucide:chevron-right' : 'lucide:chevron-down'} width={12} />
+                    {isCollapsed ? <LucideChevronRight width={12} /> : <LucideChevronDown width={12} />}
                   </button>
-                  <Icon icon="lucide:folder" width={14} className="csb-coll-icon" />
+                  <LucideFolder width={14} className="csb-coll-icon" />
                   <span className="csb-coll-name">{col.name}</span>
                   <span className="csb-count">{eps.length}</span>
                   <button
@@ -144,7 +148,7 @@ export default function CollectionSidebar({
                     onClick={(e) => { e.stopPropagation(); setConfirmDeleteId(col.id) }}
                     aria-label="Delete collection"
                   >
-                    <Icon icon="lucide:trash-2" width={12} />
+                    <LucideTrash2 width={12} />
                   </button>
                 </div>
 
@@ -180,7 +184,7 @@ export default function CollectionSidebar({
         {/* Footer: new request */}
         <div className="csb-footer">
           <button className="csb-new-req" onClick={() => { onNewRequest(); onMobileClose() }}>
-            <Icon icon="lucide:plus" width={14} />
+            <LucidePlus width={14} />
             New Request
           </button>
         </div>
@@ -245,7 +249,7 @@ function EndpointRow({ endpoint, isActive, onClick, indent = false }: {
         {endpoint.method}
       </span>
       <span className="csb-ep-title">{endpoint.title}</span>
-      {endpoint.isFavorite && <Icon icon="lucide:star" width={11} className="csb-ep-star"/>}
+      {endpoint.isFavorite && <LucideStar width={11} className="csb-ep-star"/>}
     </button>
   )
 }

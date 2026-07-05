@@ -104,6 +104,14 @@ body {
   --info: var(--cyan-500);
   --info-muted: var(--accent-muted);
 
+  /* Item-type accent tokens (dark) */
+  --type-link: #34d399; /* emerald-400 */
+  --type-note: #60a5fa; /* blue-400 */
+  --type-snippet: #a78bfa; /* violet-400 */
+  --type-prompt: #818cf8; /* indigo-400 */
+  --type-infra: #2dd4bf; /* teal-400 */
+  --type-api: #fb923c; /* orange-400 */
+
   /* Radius */
   --radius-sm: 4px;
   --radius-md: 8px;
@@ -212,6 +220,19 @@ body {
   --text-tertiary: #9ca3af;
   --text-disabled: #d1d5db;
   --text-accent: var(--cyan-600);
+
+  /* Semantic colors — darker shades for readability on white */
+  --success: #059669;
+  --warning: #d97706;
+  --danger: #dc2626;
+
+  /* Item-type accent tokens (light) — darker, saturated for contrast */
+  --type-link: #059669; /* emerald-600 */
+  --type-note: #2563eb; /* blue-600 */
+  --type-snippet: #7c3aed; /* violet-600 */
+  --type-prompt: #4f46e5; /* indigo-600 */
+  --type-infra: #0d9488; /* teal-600 */
+  --type-api: #ea580c; /* orange-600 */
 
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.06);

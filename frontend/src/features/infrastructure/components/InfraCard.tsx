@@ -190,6 +190,8 @@ const CSS = `
   flex-direction: column;
   gap:            12px;
   padding:        16px;
+  min-width:      0;          /* respect the grid track; never grow to fit content */
+  overflow:       hidden;     /* clip anything that can't shrink (long code lines) */
   background:     var(--bg-surface);
   border:         1px solid var(--border-default);
   border-radius:  var(--radius-lg);
@@ -226,6 +228,7 @@ const CSS = `
 /* Code block */
 .ic-code-wrap {
   position:      relative;
+  min-width:     0;
   background:    var(--bg-elevated);
   border:        1px solid var(--border-subtle);
   border-radius: var(--radius-md);
@@ -276,4 +279,10 @@ const CSS = `
 }
 
 .ic-actions { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+
+/* Mobile: tighten spacing so cards fit narrow screens */
+@media (max-width: 639px) {
+  .ic         { padding: 12px; gap: 10px; }
+  .ic-code    { max-height: 160px; }
+}
 `;

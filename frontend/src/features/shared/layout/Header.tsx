@@ -102,7 +102,7 @@ export default function Header() {
             aria-label="NeoVault home"
           >
             <span className="header-brand-icon">
-              <LucideVault width={22} />
+              <LucideVault width={30} />
             </span>
             <span className="header-brand-text">NeoVault</span>
           </button>
@@ -297,12 +297,8 @@ const CSS = `
   display:         flex;
   align-items:     center;
   justify-content: center;
-  width:           33px;
-  height:          33px;
-  background:      var(--accent-muted);
-  border:          1px solid var(--accent-border);
-  border-radius:   var(--radius-md);
-  color:           var(--cyan-400);
+  width:           34px;
+  height:          34px;
 }
 .header-brand-text {
   margin-top:     3px;
@@ -426,7 +422,7 @@ const CSS = `
   background:      var(--accent-muted);
   border:          1px solid var(--accent-border);
   border-radius:   var(--radius-full);
-  color:           var(--cyan-400);
+  color:           var(--text-accent);
   flex-shrink:     0;
 }
 .header-username {
@@ -473,7 +469,7 @@ const CSS = `
   background:      var(--accent-muted);
   border:          1px solid var(--accent-border);
   border-radius:   var(--radius-full);
-  color:           var(--cyan-400);
+  color:           var(--text-accent);
   flex-shrink:     0;
 }
 .header-dropdown-name {

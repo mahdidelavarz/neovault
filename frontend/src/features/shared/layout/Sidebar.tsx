@@ -9,11 +9,15 @@ import {
   FluentPrompt16Regular,
   LucideChevronLeft,
   LucideChevronRight,
+  LucideInfo,
   LucideSettings,
   LucideUser,
   LucideVault,
   LucideX,
+  SolarChatLineDuotone,
+  SolarChatLineOutline,
   SolarCodeSquareLineDuotone,
+  SolarFileLinear,
   SolarFolderFavouriteBookmarkLinear,
   SolarFolderWithFilesOutline,
   SolarGlobalLinear,
@@ -38,6 +42,9 @@ const NAV_MAIN = [
   { name: "Prompts", href: "/prompts", icon: FluentPrompt16Regular },
   { name: "API Client", href: "/api-client", icon: SolarGlobalLinear },
   { name: "Infrastructure", href: "/infrastructure", icon: SolarServerSquareCloudLinear },
+  { name: "Files", href: "/files", icon: SolarFileLinear },
+  { name: "Feedback", href: "/feedback", icon: SolarChatLineOutline },
+  { name: "About", href: "/about", icon: LucideInfo },
 ];
 
 const NAV_MANAGE = [
@@ -51,6 +58,7 @@ const NAV_SETTINGS = [
 
 const NAV_ADMIN = [
   { name: "Admin", href: "/admin", icon: SolarShieldBoldDuotone },
+  { name: "Feedback", href: "/admin/feedback", icon: SolarChatLineOutline },
 ];
 
 // ─── Sidebar ──────────────────────────────────────────────────────────────────
@@ -97,7 +105,7 @@ export default function Sidebar() {
       {/* Logo */}
       <div className="sidebar-logo ">
         <div className="sidebar-logo-icon" onClick={() => setCollapsed(!collapsed)}>
-          <LucideVault width={18} />
+          <LucideVault width={28} />
         </div>
         {!collapsed && <span className="sidebar-logo-text">NeoVault</span>}
 
@@ -207,7 +215,7 @@ export default function Sidebar() {
         <div className="sidebar-inner">
           <div className="sidebar-logo">
             <div className="sidebar-logo-icon">
-              <LucideVault width={18} />
+              <LucideVault width={28} />
             </div>
             <span className="sidebar-logo-text">NeoVault</span>
             <button
@@ -385,12 +393,8 @@ const CSS = `
   display:         flex;
   align-items:     center;
   justify-content: center;
-  width:           32px;
-  height:          32px;
-  background:      var(--accent-muted);
-  border:          1px solid var(--accent-border);
-  border-radius:   var(--radius-md);
-  color:           var(--cyan-400);
+  width:           34px;
+  height:          34px;
   flex-shrink:     0;
 }
 .sidebar-logo-text {

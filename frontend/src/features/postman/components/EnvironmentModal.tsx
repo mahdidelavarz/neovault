@@ -1,7 +1,10 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Icon } from '@iconify/react'
+import {
+  LucideLayers, LucideX, LucideBox, LucideCheck, LucidePlus,
+  LucideTrash2, SvgSpinnersRingResize, LucideSave,
+} from '@/Icons/Icons'
 import { type Environment, type KeyValue } from '@/features/postman/types/apiClient'
 import {
   useCreateEnvironment,
@@ -100,11 +103,11 @@ export default function EnvironmentModal({ environments, onClose }: Props) {
           {/* ── Header ── */}
           <div className="em-header">
             <span className="em-header-title">
-              <Icon icon="lucide:layers" width={15} />
+              <LucideLayers width={15} />
               Environments
             </span>
             <button className="em-close" onClick={onClose} aria-label="Close">
-              <Icon icon="lucide:x" width={16} />
+              <LucideX width={16} />
             </button>
           </div>
 
@@ -119,7 +122,7 @@ export default function EnvironmentModal({ environments, onClose }: Props) {
                   className={['em-env-item', selectedId === env.id ? 'em-env-item--active' : ''].filter(Boolean).join(' ')}
                   onClick={() => handleSelectEnv(env.id)}
                 >
-                  <Icon icon="lucide:box" width={13} />
+                  <LucideBox width={13} />
                   <span className="em-env-name">{env.name}</span>
                   <span className="em-env-count">{(env.variables ?? []).filter((v) => v.enabled).length}</span>
                 </button>
@@ -139,15 +142,15 @@ export default function EnvironmentModal({ environments, onClose }: Props) {
                     }}
                   />
                   <button className="em-new-env-ok" onClick={handleCreateEnv} disabled={createEnv.isPending}>
-                    <Icon icon="lucide:check" width={13} />
+                    <LucideCheck width={13} />
                   </button>
                   <button className="em-new-env-cancel" onClick={() => { setCreating(false); setNewEnvName('') }}>
-                    <Icon icon="lucide:x" width={13} />
+                    <LucideX width={13} />
                   </button>
                 </div>
               ) : (
                 <button className="em-add-env-btn" onClick={() => setCreating(true)}>
-                  <Icon icon="lucide:plus" width={13} />
+                  <LucidePlus width={13} />
                   New environment
                 </button>
               )}
@@ -171,7 +174,7 @@ export default function EnvironmentModal({ environments, onClose }: Props) {
                       disabled={deleteEnv.isPending}
                       title="Delete this environment"
                     >
-                      <Icon icon="lucide:trash-2" width={13} />
+                      <LucideTrash2 width={13} />
                       Delete
                     </button>
                   </div>
@@ -207,13 +210,13 @@ export default function EnvironmentModal({ environments, onClose }: Props) {
                             spellCheck={false}
                           />
                           <button className="em-var-remove" onClick={() => removeVar(v.id!)} title="Remove variable">
-                            <Icon icon="lucide:x" width={12} />
+                            <LucideX width={12} />
                           </button>
                         </div>
                       ))}
 
                       <button className="em-add-var-btn" onClick={addVar}>
-                        <Icon icon="lucide:plus" width={13} />
+                        <LucidePlus width={13} />
                         Add variable
                       </button>
                     </div>
@@ -225,7 +228,7 @@ export default function EnvironmentModal({ environments, onClose }: Props) {
                 </>
               ) : (
                 <div className="em-empty">
-                  <Icon icon="lucide:layers" width={28} className="em-empty-icon" />
+                  <LucideLayers width={28} className="em-empty-icon" />
                   <p>No environment selected.</p>
                   <p>Create one to start using variables.</p>
                 </div>
@@ -243,8 +246,8 @@ export default function EnvironmentModal({ environments, onClose }: Props) {
                 disabled={!dirty || updateEnv.isPending}
               >
                 {updateEnv.isPending
-                  ? <Icon icon="svg-spinners:ring-resize" width={14} />
-                  : <Icon icon="lucide:save" width={14} />
+                  ? <SvgSpinnersRingResize width={14} />
+                  : <LucideSave width={14} />
                 }
                 Save
               </button>

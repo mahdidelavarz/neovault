@@ -1,7 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { Icon } from '@iconify/react'
+import {
+  SvgSpinnersRingResize, LucideSend, LucideTimer, LucideHardDrive,
+  LucideBookmark, LucideCode2, LucideGitBranch, LucideCode, LucideWrapText,
+  LucideCheck, LucideCopy, LucideBraces, LucideList,
+} from '@/Icons/Icons'
 import JsonTree from './JsonTree'
 import GenerateCodeModal from './GenerateCodeModal'
 import { type RequestSnapshot } from '@/features/postman/utils/apiCodegen'
@@ -71,7 +75,7 @@ export default function ResponseViewer({ response, isLoading, requestSnapshot, i
     <>
       <style>{CSS}</style>
       <div className="rv rv--loading">
-        <Icon icon="svg-spinners:ring-resize" width={28} className="rv-spinner" />
+        <SvgSpinnersRingResize width={28} className="rv-spinner" />
         <p className="rv-loading-text">Sending request…</p>
       </div>
     </>
@@ -83,7 +87,7 @@ export default function ResponseViewer({ response, isLoading, requestSnapshot, i
       <style>{CSS}</style>
       <div className="rv rv--empty">
         <div className="rv-empty-icon">
-          <Icon icon="lucide:send" width={26} />
+          <LucideSend width={26} />
         </div>
         <p className="rv-empty-title">No response yet</p>
         <p className="rv-empty-sub">Enter a URL and press Send to test your API</p>
@@ -108,13 +112,13 @@ export default function ResponseViewer({ response, isLoading, requestSnapshot, i
             <span className="rv-status-badge" style={{ color: statusColor, borderColor: statusColor + '33', background: statusColor + '1a' }}>
               {response.status} {response.statusText}
             </span>
-            <span className="rv-stat"><Icon icon="lucide:timer" width={12} />{response.time}ms</span>
+            <span className="rv-stat"><LucideTimer width={12} />{response.time}ms</span>
             {response.size > 0 && (
-              <span className="rv-stat"><Icon icon="lucide:hard-drive" width={12} />{formatSize(response.size)}</span>
+              <span className="rv-stat"><LucideHardDrive width={12} />{formatSize(response.size)}</span>
             )}
             {isExample && (
               <span className="rv-example-badge" title="Saved example response — send the request again for a live result">
-                <Icon icon="lucide:bookmark" width={11} />
+                <LucideBookmark width={11} />
                 Saved example
               </span>
             )}
@@ -123,7 +127,7 @@ export default function ResponseViewer({ response, isLoading, requestSnapshot, i
           <div className="rv-status-right">
             {requestSnapshot && (
               <button className="rv-tool-btn rv-tool-btn--wide" onClick={() => setCodeOpen(true)} title="Generate code for this request">
-                <Icon icon="lucide:code-2" width={13} />
+                <LucideCode2 width={13} />
                 Generate
               </button>
             )}
@@ -134,7 +138,7 @@ export default function ResponseViewer({ response, isLoading, requestSnapshot, i
                   onClick={() => setViewMode('tree')}
                   title="Tree view"
                 >
-                  <Icon icon="lucide:git-branch" width={13} />
+                  <LucideGitBranch width={13} />
                   Tree
                 </button>
                 <button
@@ -142,7 +146,7 @@ export default function ResponseViewer({ response, isLoading, requestSnapshot, i
                   onClick={() => setViewMode('raw')}
                   title="Raw view"
                 >
-                  <Icon icon="lucide:code" width={13} />
+                  <LucideCode width={13} />
                   Raw
                 </button>
               </div>
@@ -153,14 +157,14 @@ export default function ResponseViewer({ response, isLoading, requestSnapshot, i
                 onClick={() => setWordWrap((p) => !p)}
                 title="Toggle word wrap"
               >
-                <Icon icon="lucide:wrap-text" width={13} />
+                <LucideWrapText width={13} />
               </button>
             )}
             <button
               className={['rv-copy-btn', copied ? 'rv-copy-btn--copied' : ''].filter(Boolean).join(' ')}
               onClick={handleCopyBody}
             >
-              <Icon icon={copied ? 'lucide:check' : 'lucide:copy'} width={13} />
+              {copied ? <LucideCheck width={13} /> : <LucideCopy width={13} />}
               {copied ? 'Copied' : 'Copy'}
             </button>
           </div>
@@ -172,13 +176,13 @@ export default function ResponseViewer({ response, isLoading, requestSnapshot, i
             className={['rv-tab', tab === 'body' ? 'rv-tab--active' : ''].filter(Boolean).join(' ')}
             onClick={() => setTab('body')}
           >
-            <Icon icon="lucide:braces" width={13} />Body
+            <LucideBraces width={13} />Body
           </button>
           <button
             className={['rv-tab', tab === 'headers' ? 'rv-tab--active' : ''].filter(Boolean).join(' ')}
             onClick={() => setTab('headers')}
           >
-            <Icon icon="lucide:list" width={13} />Headers
+            <LucideList width={13} />Headers
             <span className="rv-tab-count">{headerCount}</span>
           </button>
         </div>

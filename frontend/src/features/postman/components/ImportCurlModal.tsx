@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Icon } from '@iconify/react'
+import { LucideDownload } from '@/Icons/Icons'
 import Modal from '@/features/shared/ui/Modal'
 import Button from '@/features/shared/ui/Button'
 import { parseCurlCommand } from '@/features/snippets/utils/snippetUtils'
@@ -57,7 +57,7 @@ export default function ImportCurlModal({ isOpen, onClose, onImport }: Props) {
         <div className="icm-actions">
           <Button type="button" variant="ghost" onClick={onClose}>Cancel</Button>
           <Button type="button" onClick={handleImport} disabled={!text.trim()}>
-            <Icon icon="lucide:download" width={14} />
+            <LucideDownload width={14} />
             Import
           </Button>
         </div>

@@ -5,6 +5,7 @@ import { usePwaInstall } from "@/features/pwa/hooks/usePwaInstall";
 import { useSwUpdate } from "@/features/pwa/hooks/useSwUpdate";
 import {
   LucideDownload,
+  LucideExternalLink,
   LucideRefreshCw,
   LucideShare2,
   LucideX,
@@ -16,7 +17,8 @@ const SHOW_DELAY_MS = 30_000;
 const SNOOZE_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
 
 export default function InstallBanner() {
-  const { canInstall, isIos, isStandalone, install } = usePwaInstall();
+  const { canInstall, isIos, isUnsupportedInstallBrowser, isStandalone, install } =
+    usePwaInstall();
   const { updateAvailable, applyUpdate } = useSwUpdate();
 
   const [visible, setVisible] = useState(false);
@@ -33,11 +35,11 @@ export default function InstallBanner() {
 
     // Wait a short delay before appearing — don't interrupt the first impression
     const timer = setTimeout(() => {
-      if (canInstall || isIos) setVisible(true);
+      if (canInstall || isIos || isUnsupportedInstallBrowser) setVisible(true);
     }, SHOW_DELAY_MS);
 
     return () => clearTimeout(timer);
-  }, [canInstall, isIos, isStandalone]);
+  }, [canInstall, isIos, isUnsupportedInstallBrowser, isStandalone]);
 
   const dismiss = () => {
     setVisible(false);
@@ -48,6 +50,15 @@ export default function InstallBanner() {
   const handleInstall = async () => {
     const accepted = await install();
     if (accepted) dismiss();
+  };
+
+  // Reopen the current page in Chrome via an Android intent URL. Chrome can mint a
+  // WebAPK (true standalone install), which Opera/Firefox cannot.
+  const openInChrome = () => {
+    const { host, pathname, search } = window.location;
+    window.location.href =
+      `intent://${host}${pathname}${search}` +
+      `#Intent;scheme=https;package=com.android.chrome;end`;
   };
 
   // SW update toast takes priority over install banner
@@ -156,6 +167,32 @@ export default function InstallBanner() {
               </button>
             </>
           )}
+        </div>
+      )}
+
+      {/* Android Firefox/Opera: can't mint a WebAPK — point the user to Chrome */}
+      {isUnsupportedInstallBrowser && !canInstall && (
+        <div className="pwa-banner" role="banner">
+          <div className="pwa-banner-text">
+            <span className="pwa-banner-title">Install as an app</span>
+            <span className="pwa-banner-sub">
+              Opera &amp; Firefox can&apos;t install web apps — open NeoVault in
+              Chrome to add it to your home screen.
+            </span>
+          </div>
+          <div className="pwa-banner-actions">
+            <button className="pwa-install-btn" onClick={openInChrome}>
+              <LucideExternalLink width={15} />
+              Open in Chrome
+            </button>
+            <button
+              className="pwa-dismiss-x"
+              onClick={dismiss}
+              aria-label="Dismiss"
+            >
+              <LucideX width={14} />
+            </button>
+          </div>
         </div>
       )}
     </>

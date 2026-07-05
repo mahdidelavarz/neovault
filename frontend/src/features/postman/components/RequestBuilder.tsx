@@ -1,7 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { Icon } from '@iconify/react'
+import {
+  LucideTerminal, LucideSave, LucideBookmarkPlus, LucideTrash2,
+  LucideLayers, LucideChevronDown, LucideSettings2, SvgSpinnersRingResize,
+  LucideSend, LucideArrowRight, LucideSlidersHorizontal, LucideList,
+  LucideBraces, LucideShieldCheck, LucideLock, LucideShieldAlert,
+  LucideX, LucidePlus,
+} from '@/Icons/Icons'
 import { type HttpMethod, type Environment, type KeyValue, type AuthType, type AuthData, HTTP_METHODS, AUTH_TYPES } from '@/features/postman/types/apiClient'
 import { useVault } from '@/features/settings/security/hooks/useVault'
 
@@ -87,16 +93,16 @@ export default function RequestBuilder({
           <span className="rb-title">{title}</span>
           <div className="rb-title-actions">
             <button className="rb-import-btn" onClick={onImportCurl} title="Import from cURL">
-              <Icon icon="lucide:terminal" width={14} />
+              <LucideTerminal width={14} />
               <span className="rb-import-label">Import cURL</span>
             </button>
             <button className="rb-save-btn" onClick={onSave} title={isSaved ? 'Update' : 'Save'}>
-              <Icon icon={isSaved ? 'lucide:save' : 'lucide:bookmark-plus'} width={14} />
+              {isSaved ? <LucideSave width={14} /> : <LucideBookmarkPlus width={14} />}
               {isSaved ? 'Update' : 'Save'}
             </button>
             {isSaved && (
               <button className="rb-del-btn" onClick={onDelete} title="Delete endpoint">
-                <Icon icon="lucide:trash-2" width={14} />
+                <LucideTrash2 width={14} />
               </button>
             )}
           </div>
@@ -105,7 +111,7 @@ export default function RequestBuilder({
         {/* ── Environment bar ── */}
         <div className="rb-env-bar">
           <div className="rb-env-pill">
-            <Icon icon="lucide:layers" width={12} className="rb-env-pill-icon" />
+            <LucideLayers width={12} className="rb-env-pill-icon" />
             <select
               className="rb-env-select"
               value={activeEnvId ?? ''}
@@ -128,10 +134,10 @@ export default function RequestBuilder({
                 </optgroup>
               )}
             </select>
-            <Icon icon="lucide:chevron-down" width={11} className="rb-env-pill-chevron" />
+            <LucideChevronDown width={11} className="rb-env-pill-chevron" />
           </div>
           <button className="rb-env-manage" onClick={onManageEnvs} title="Manage environments">
-            <Icon icon="lucide:settings-2" width={13} />
+            <LucideSettings2 width={13} />
             Manage
           </button>
           {activeEnv && (
@@ -155,7 +161,7 @@ export default function RequestBuilder({
                 <option key={m} value={m}>{m}</option>
               ))}
             </select>
-            <Icon icon="lucide:chevron-down" className="rb-method-chevron" style={{ color: METHOD_COLORS[method] }} />
+            <LucideChevronDown className="rb-method-chevron" style={{ color: METHOD_COLORS[method] }} />
           </div>
 
           {/* URL input */}
@@ -178,8 +184,8 @@ export default function RequestBuilder({
             aria-label="Send request"
           >
             {isSending
-              ? <Icon icon="svg-spinners:ring-resize" width={16} />
-              : <Icon icon="lucide:send" width={16} />
+              ? <SvgSpinnersRingResize width={16} />
+              : <LucideSend width={16} />
             }
             <span className="rb-send-label">Send</span>
           </button>
@@ -188,7 +194,7 @@ export default function RequestBuilder({
         {/* ── Resolved URL preview — shows when a variable is substituted ── */}
         {hasSubstitution && (
           <div className="rb-resolved">
-            <Icon icon="lucide:arrow-right" width={11} className="rb-resolved-arrow" />
+            <LucideArrowRight width={11} className="rb-resolved-arrow" />
             <span className="rb-resolved-url">{maskedUrl}</span>
           </div>
         )}
@@ -199,7 +205,7 @@ export default function RequestBuilder({
             className={['rb-tab', activeTab === 'params' ? 'rb-tab--active' : ''].filter(Boolean).join(' ')}
             onClick={() => setActiveTab('params')}
           >
-            <Icon icon="lucide:sliders-horizontal" width={13} />
+            <LucideSlidersHorizontal width={13} />
             Params
             {enabledParamCount > 0 && <span className="rb-tab-badge">{enabledParamCount}</span>}
           </button>
@@ -207,7 +213,7 @@ export default function RequestBuilder({
             className={['rb-tab', activeTab === 'headers' ? 'rb-tab--active' : ''].filter(Boolean).join(' ')}
             onClick={() => setActiveTab('headers')}
           >
-            <Icon icon="lucide:list" width={13} />
+            <LucideList width={13} />
             Headers
             {headers.trim() && <span className="rb-tab-dot" />}
           </button>
@@ -218,7 +224,7 @@ export default function RequestBuilder({
             disabled={!hasBody}
             title={!hasBody ? 'Body not available for ' + method : undefined}
           >
-            <Icon icon="lucide:braces" width={13} />
+            <LucideBraces width={13} />
             Body
             {hasBody && body.trim() && <span className="rb-tab-dot" />}
           </button>
@@ -226,7 +232,7 @@ export default function RequestBuilder({
             className={['rb-tab', activeTab === 'auth' ? 'rb-tab--active' : ''].filter(Boolean).join(' ')}
             onClick={() => setActiveTab('auth')}
           >
-            <Icon icon="lucide:shield-check" width={13} />
+            <LucideShieldCheck width={13} />
             Auth
             {authType !== 'none' && <span className="rb-tab-dot" />}
           </button>
@@ -270,7 +276,7 @@ export default function RequestBuilder({
                     onClick={() => onQueryParamsChange(queryParams.filter((p) => p.id !== param.id))}
                     title="Remove"
                   >
-                    <Icon icon="lucide:x" width={12} />
+                    <LucideX width={12} />
                   </button>
                 </div>
               ))}
@@ -279,7 +285,7 @@ export default function RequestBuilder({
               className="rb-params-add"
               onClick={() => onQueryParamsChange([...queryParams, { id: crypto.randomUUID(), key: '', value: '', enabled: true }])}
             >
-              <Icon icon="lucide:plus" width={13} />
+              <LucidePlus width={13} />
               Add parameter
             </button>
             {queryParams.length === 0 && (
@@ -355,7 +361,7 @@ export default function RequestBuilder({
                 <label className="rb-auth-label">Bearer Token</label>
                 {vaultLocked ? (
                   <div className="rb-auth-locked">
-                    <Icon icon="lucide:lock" width={13} />
+                    <LucideLock width={13} />
                     <span>Unlock vault to view or edit credentials</span>
                   </div>
                 ) : (
@@ -370,7 +376,7 @@ export default function RequestBuilder({
                 )}
                 {!vaultLocked && !vaultEnabled && authData.token && (
                   <p className="rb-auth-hint">
-                    <Icon icon="lucide:shield-alert" width={11} />
+                    <LucideShieldAlert width={11} />
                     Enable vault to encrypt this token at rest
                   </p>
                 )}
@@ -382,7 +388,7 @@ export default function RequestBuilder({
               <div className="rb-auth-fields">
                 {vaultLocked ? (
                   <div className="rb-auth-locked">
-                    <Icon icon="lucide:lock" width={13} />
+                    <LucideLock width={13} />
                     <span>Unlock vault to view or edit credentials</span>
                   </div>
                 ) : (
@@ -430,7 +436,7 @@ export default function RequestBuilder({
                 </div>
                 {vaultLocked ? (
                   <div className="rb-auth-locked">
-                    <Icon icon="lucide:lock" width={13} />
+                    <LucideLock width={13} />
                     <span>Unlock vault to view or edit the API key value</span>
                   </div>
                 ) : (
@@ -461,7 +467,7 @@ export default function RequestBuilder({
 
             {vaultEnabled && vaultUnlocked && authType !== 'none' && isSaved && (
               <p className="rb-auth-vault-note">
-                <Icon icon="lucide:shield-check" width={11} />
+                <LucideShieldCheck width={11} />
                 Credentials will be encrypted in your vault when saved
               </p>
             )}

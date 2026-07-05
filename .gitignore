@@ -36,6 +36,7 @@ backend/.env
 backend/coverage/
 backend/*.log
 backend/tsconfig.tsbuildinfo
+backend/uploads/
 
 # TypeScript cache
 backend/.tscache/

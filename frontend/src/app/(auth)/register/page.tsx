@@ -112,7 +112,7 @@ export default function RegisterPage() {
           {/* Logo */}
           <div className="auth-logo">
             <div className="auth-logo-icon">
-              <LucideVault width={22} />
+              <LucideVault width={34} />
             </div>
             <span className="auth-logo-text">NeoVault</span>
           </div>
@@ -279,13 +279,8 @@ const CSS = `
   display:         flex;
   align-items:     center;
   justify-content: center;
-  width:           40px;
-  height:          40px;
-  background:      var(--accent-muted);
-  border:          1px solid var(--accent-border);
-  border-radius:   var(--radius-md);
-  color:           var(--cyan-400);
-  box-shadow:      var(--shadow-glow);
+  width:           42px;
+  height:          42px;
 }
 .auth-logo-text {
   font-size:      var(--text-xl);

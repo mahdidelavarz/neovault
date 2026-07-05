@@ -113,4 +113,10 @@ const CSS = `
   border-color: var(--accent-border);
   color:        var(--cyan-300);
 }
+
+/* Light mode — darker text for readability on white */
+[data-theme="light"] .alert--success { color: #059669; }
+[data-theme="light"] .alert--error   { color: #dc2626; }
+[data-theme="light"] .alert--warning { color: #d97706; }
+[data-theme="light"] .alert--info    { color: var(--text-accent); }
 `

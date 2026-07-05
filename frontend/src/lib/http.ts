@@ -44,7 +44,17 @@ api.interceptors.response.use(
   (response) => response,
   async (error: AxiosError<{ message?: string }>) => {
     if (!error.response) {
-      error.message = "You are offline";
+      // No HTTP response can mean several things — only call it "offline" when the
+      // browser actually reports no connectivity. isOfflineError() (lib/offlineApi.ts)
+      // relies on this exact string to decide whether to queue a mutation, so we must
+      // not use it for timeouts / unreachable-server / CORS failures.
+      if (typeof navigator !== "undefined" && !navigator.onLine) {
+        error.message = "You are offline";
+      } else if (error.code === "ECONNABORTED" || error.code === "ETIMEDOUT") {
+        error.message = "Request timed out";
+      } else {
+        error.message = "Network error — could not reach the server";
+      }
       return Promise.reject(error);
     }
 

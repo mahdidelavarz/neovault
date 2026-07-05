@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useItemMembership } from "@/features/projects/hooks/useProjects";
 import { type ProjectItemType, PROJECT_COLOR_CSS } from "@/features/projects/types/project";
 import AddToProjectModal from "./AddToProjectModal";
-import { LucideFolderOpen } from "@/Icons/Icons";
+import { LucideFolderOpen, SolarFolderFavouriteBookmarkLinear, SolarFolderWithFilesOutline } from "@/Icons/Icons";
 
 interface ProjectBadgeProps {
     itemType: ProjectItemType;
@@ -37,7 +37,7 @@ export default function ProjectBadge({ itemType, itemId }: ProjectBadgeProps) {
                 type="button"
             >
                 <style>{CSS}</style>
-                <LucideFolderOpen width={16} />
+                <SolarFolderWithFilesOutline width={16} />
                 {label && <span className="pbadge-label">{label}</span>}
             </button>
 

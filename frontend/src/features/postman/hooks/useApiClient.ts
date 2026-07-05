@@ -155,7 +155,10 @@ export const useDeleteEndpoint = () => {
 export const useTestEndpoint = () => {
   return useMutation({
     mutationFn: async (data: TestRequestDto) => {
-      const { data: res } = await api.post('/api-client/test', data);
+      // The backend proxy allows the outbound request up to 30s (Api.service.ts),
+      // so give this call a longer timeout than the 15s global default — otherwise
+      // the browser aborts first and the failure looks like a network error.
+      const { data: res } = await api.post('/api-client/test', data, { timeout: 35_000 });
       return res as TestResponseDto;
     },
   });

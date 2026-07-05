@@ -31,7 +31,7 @@ export default function CardGrid({ children, minCardWidth = 300, density = "comf
 const CSS = `
 .card-grid {
   display:               grid;
-  grid-template-columns: repeat(auto-fill, minmax(var(--cg-min, 300px), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--cg-min, 300px), 100%), 1fr));
   gap:                   16px;
 }
 .card-grid[data-density="compact"] {
@@ -39,6 +39,7 @@ const CSS = `
   gap:       10px;
 }
 @media (max-width: 639px) {
-  .card-grid { grid-template-columns: 1fr; gap: 10px; }
+  /* minmax(0, 1fr) — not 1fr — so a card's min-content can't blow the track past the viewport */
+  .card-grid { grid-template-columns: minmax(0, 1fr); gap: 10px; }
 }
 `;

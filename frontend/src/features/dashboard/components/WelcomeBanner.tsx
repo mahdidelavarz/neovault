@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useAuthStore } from "@/features/auth/store/authStore";
-import { LucideBarChart3, LucideVault } from "@/Icons/Icons";
+import { SolarBarChartLineDuotone, LucideVault } from "@/Icons/Icons";
 
 const QUOTES = [
   "Knowledge is power. Keep it organized! 🚀",
@@ -41,7 +41,7 @@ export default function WelcomeBanner({
         <div className="dp-hero-left">
           <div className="dp-hero-brand">
             <div className="dp-hero-vault">
-              <LucideVault width={14} />
+              <LucideVault width={22} />
             </div>
             <span>NeoVault</span>
           </div>
@@ -55,7 +55,7 @@ export default function WelcomeBanner({
         {/* Summary pill */}
         <div className="dp-hero-summary">
           <div className="dp-hero-summary-row">
-            <LucideBarChart3 width={16} className="dp-hero-summary-icon" />
+            <SolarBarChartLineDuotone width={16} className="dp-hero-summary-icon" />
             <div>
               {isLoading ? (
                 <div
@@ -121,11 +121,7 @@ const CSS = `
   display:         flex;
   align-items:     center;
   justify-content: center;
-  width:           20px; height: 20px;
-  background:      var(--accent-muted);
-  border:          1px solid var(--accent-border);
-  border-radius:   var(--radius-sm);
-  color:           var(--cyan-400);
+  width:           24px; height: 24px;
 }
 .dp-hero-greeting {
   font-size:      var(--text-2xl);
@@ -135,7 +131,7 @@ const CSS = `
   line-height:    1.2;
   margin:         0;
 }
-.dp-hero-name  { color: var(--cyan-400); }
+.dp-hero-name  { color: var(--text-accent); }
 .dp-hero-date  { font-size: var(--text-sm); color: var(--text-tertiary); margin-top: 4px; }
 
 .dp-hero-summary {

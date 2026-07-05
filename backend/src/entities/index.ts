@@ -10,3 +10,4 @@ export { ApiEndpoint } from './ApiEndpoint';
 export { ApiCollection } from './ApiCollection';
 export { ApiEnvironment } from './ApiEnvironment';
 export { Infrastructure } from './Infrastructure';
+export { Feedback } from './Feedback';
