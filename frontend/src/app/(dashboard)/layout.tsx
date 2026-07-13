@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import InstallBanner from "@/features/pwa/components/InstallBanner";
 import OfflineBanner from "@/features/pwa/components/OfflineBanner";
 import SyncStatusBadge from "@/features/pwa/components/SyncStatusBadge";
@@ -8,6 +9,7 @@ import { useVaultMigration } from "@/features/settings/security/hooks/useVaultMi
 import Header from "@/features/shared/layout/Header";
 import Sidebar from "@/features/shared/layout/Sidebar";
 import BottomTabBar from "@/features/shared/layout/BottomNavBar";
+import api from "@/lib/http";
 
 export default function DashboardLayout({
   children,
@@ -16,6 +18,16 @@ export default function DashboardLayout({
 }) {
   const { showModal, items, progress, encryptAll, dismiss } =
     useVaultMigration();
+
+  useEffect(() => {
+    const key = "neovault:app-open-tracked";
+    if (sessionStorage.getItem(key)) return;
+
+    sessionStorage.setItem(key, "1");
+    api.post("/activity/app-open").catch(() => {
+      sessionStorage.removeItem(key);
+    });
+  }, []);
 
   return (
     <div className="dashboard-layout">

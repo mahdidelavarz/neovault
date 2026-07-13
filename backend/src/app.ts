@@ -23,6 +23,8 @@ import promptCollectionRoutes from './routes/promptCollection.route';
 import adminRoutes from './routes/admin.route';
 import fileRoutes from './routes/files.route';
 import feedbackRoutes from './routes/feedback.route';
+import activityRoutes from './routes/activity.route';
+import { activityMiddleware } from './middleware/activity.middleware';
 import swaggerRouter from './config/swagger';
 
 const app = express();
@@ -78,6 +80,8 @@ app.use('/api', (_req, res, next) => {
     next();
 });
 
+app.use('/api', activityMiddleware);
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/links', linkRoutes);
@@ -94,6 +98,7 @@ app.use('/api/vault', vaultRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/prompt-collections', promptCollectionRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/activity', activityRoutes);
 app.use('/api/files', fileRoutes);
 app.use('/api/feedback', feedbackRoutes);
 

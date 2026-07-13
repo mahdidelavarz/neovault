@@ -7,6 +7,7 @@ import { PasswordResetToken } from '../entities/PasswordResetToken';
 import { RefreshToken } from '../entities/RefreshToken';
 import { jwtConfig } from '../config/jwt';
 import { sendPasswordResetEmail } from '../utils/mailer';
+import { ActivityService } from './Activity.service';
 
 type AuthResult = { user: Partial<User>; accessToken: string; refreshToken: string };
 
@@ -14,6 +15,7 @@ export class AuthService {
     private userRepository = AppDataSource.getRepository(User);
     private resetTokenRepository = AppDataSource.getRepository(PasswordResetToken);
     private refreshTokenRepository = AppDataSource.getRepository(RefreshToken);
+    private activityService = new ActivityService();
 
     async register(username: string, password: string, email?: string): Promise<AuthResult> {
         const existingUser = await this.userRepository.findOne({ where: { username } });
@@ -39,6 +41,15 @@ export class AuthService {
 
         const isValidPassword = await bcrypt.compare(password, user.passwordHash);
         if (!isValidPassword) throw new Error('Invalid credentials');
+
+        await this.activityService.log({
+            userId: user.id,
+            type: 'login',
+            module: 'auth',
+            action: 'Logged in',
+            method: 'POST',
+            path: '/api/auth/login',
+        });
 
         return this.buildAuthResult(user);
     }
