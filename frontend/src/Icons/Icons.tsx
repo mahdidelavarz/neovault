@@ -3120,3 +3120,55 @@ export function SolarChatLineOutline(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+export function HugeiconsChatGpt(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      {...props}
+    >
+      <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"><path d="M11.745 14.85L6.905 12V7c0-2.21 1.824-4 4.076-4c1.397 0 2.63.69 3.365 1.741"/><path d="M9.6 19.18A4.1 4.1 0 0 0 13.02 21c2.25 0 4.076-1.79 4.076-4v-5L12.16 9.097"/><path d="M9.452 13.5V7.67l4.412-2.5c1.95-1.105 4.443-.45 5.569 1.463a3.93 3.93 0 0 1 .076 3.866"/><path d="M4.49 13.5a3.93 3.93 0 0 0 .075 3.866c1.126 1.913 3.62 2.568 5.57 1.464l4.412-2.5l.096-5.596"/><path d="M17.096 17.63a4.09 4.09 0 0 0 3.357-1.996c1.126-1.913.458-4.36-1.492-5.464l-4.413-2.5l-5.059 2.755"/><path d="M6.905 6.37a4.09 4.09 0 0 0-3.358 1.996c-1.126 1.914-.458 4.36 1.492 5.464l4.413 2.5l5.048-2.75"/></g>
+    </svg>
+  );
+}
+export function HugeiconsDeepseek(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      {...props}
+    >
+      <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"><path d="M20.725 6.166a2.42 2.42 0 0 0-1.771.786c-.216-1.023-.859-1.324-1.593-1.665c-.465-.216-.659-.696-.722-1.043c-.024-.133-.133-.24-.268-.24c-.134 0-.262.055-.326.173c-.14.25-.354.8-.373 1.81c-.029 1.503 1.21 2.662 1.834 3.053c-.064.37-.29.942-.395 1.182a4.9 4.9 0 0 1-1.87-1.234c-.958-1.043-1.738-1.781-2.756-2.503s-.337-1.583.09-1.788s.103-.415-.962-.379c-.853.029-2.067.53-2.567.777c-.51-.162-1.572-.194-2.038-.19C2.425 4.905 1 8.98 1 11c0 6.086 4.873 9 8.373 9c3.958 0 5.345-1.614 5.345-1.614c.164.101.76.316 1.838.362c1.349.057 1.851-.324 1.89-.617s-.179-.4-.37-.49c-.19-.089-.49-.26-1.055-.445c-.453-.147-.657-.308-.702-.37c2.73-2.472 3.23-5.935 3.153-7.407c2.112-.082 2.943-1.488 3.217-2.2c.28-.726.454-1.716.164-1.94c-.232-.18-.426.036-.494.167c-.372.396-.644.719-1.635.719"/><path d="M12 10.568s.876-.27 1.645.255c1.041.71 1.355 1.676 1.355 1.676m-1.5 4s-1.041-.507-2.604-2.539c-1.878-2.44-3.647-5.074-7.367-4.213c0 0-.029 5.25 4.971 6.752"/></g>
+    </svg>
+  );
+}
+export function HugeiconsClaude(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      {...props}
+    >
+      <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="m13 12l5.5-7M7.64 3l4.86 9l1.187-9M4.484 6.717L11.987 12M3 12l8.987.473m.237.704L7 20m-2.158-3.132l6.44-3.892M11.5 21l1.165-7.823M21 14l-7.815-1.332M21 10.578l-8 1.744m3.779 7.324l-3.891-6.269m6.469 4.83l-6.044-5.218"/>
+    </svg>
+  );
+}
+export function HugeiconsGoogleGemini(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      {...props}
+    >
+      <path fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth="1.5" d="M3 12a9 9 0 0 0 9-9a9 9 0 0 0 9 9a9 9 0 0 0-9 9a9 9 0 0 0-9-9Z"/>
+    </svg>
+  );
+}

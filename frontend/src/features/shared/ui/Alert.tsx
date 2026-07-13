@@ -115,8 +115,8 @@ const CSS = `
 }
 
 /* Light mode — darker text for readability on white */
-[data-theme="light"] .alert--success { color: #059669; }
-[data-theme="light"] .alert--error   { color: #dc2626; }
-[data-theme="light"] .alert--warning { color: #d97706; }
+[data-theme="light"] .alert--success { color: var(--success); }
+[data-theme="light"] .alert--error   { color: var(--danger); }
+[data-theme="light"] .alert--warning { color: var(--warning); }
 [data-theme="light"] .alert--info    { color: var(--text-accent); }
 `

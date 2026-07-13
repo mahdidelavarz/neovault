@@ -374,20 +374,20 @@ const CSS = `
 
 /* Content */
 .prompt-card-content {
-  background:    #1e1e2e;
+  background:    var(--code-bg);
   border-radius: var(--radius-md);
   padding:       14px;
   max-height:    160px;
   overflow-y:    auto;
   cursor:        pointer;
-  border:        1px solid transparent;
+  border:        1px solid var(--code-border);
   transition:    border-color var(--transition-fast);
 }
-.prompt-card-content:hover { border-color: rgba(255,255,255,0.12); }
+.prompt-card-content:hover { border-color: var(--code-border-hover); }
 .prompt-card-content-text {
   font-family:   var(--font-mono, monospace);
   font-size:     var(--text-xs);
-  color:         #e2e8f0;
+  color:         var(--ct-fg);
   white-space:   pre-wrap;
   word-break:    break-word;
   margin:        0;
@@ -470,4 +470,17 @@ const CSS = `
 .quick-send-btn--orange { background: rgba(249,115,22,0.1);  color: #f97316; }
 .quick-send-btn--blue   { background: rgba(59,130,246,0.1);  color: #3b82f6; }
 .quick-send-btn:hover   { filter: brightness(0.9); transform: scale(1.1); }
+
+/* Mobile cards keep a short, scrollable preview so actions stay visible. */
+@media (max-width: 639px) {
+  .prompt-card { padding: 12px; gap: 10px; }
+  .prompt-card-description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+  .prompt-card-content { max-height: 112px; overflow-y: auto; padding: 11px 12px; }
+  .prompt-card-actions { padding-top: 10px; gap: 6px; }
+}
 `;

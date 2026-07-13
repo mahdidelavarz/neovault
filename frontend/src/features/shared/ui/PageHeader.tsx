@@ -45,7 +45,6 @@ const CSS = `
   color:      var(--text-tertiary);
   margin-top: 2px;
 }
-.ph-action { flex-shrink: 0; }
 @media (max-width: 479px) {
   .ph-title { font-size: var(--text-xl); }
 }

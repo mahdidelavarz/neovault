@@ -51,7 +51,6 @@ import {
   LucideCheck,
   LucideExternalLink,
   LucideFolder,
-  LucideClock,
   LucideBarChart3,
   LucidePlus,
   LucideRefreshCw,
@@ -59,6 +58,11 @@ import {
   LucideBrain,
   LucideSparkles,
   LucideGem,
+  LucideMoreHorizontal,
+  HugeiconsChatGpt,
+  HugeiconsDeepseek,
+  HugeiconsClaude,
+  HugeiconsGoogleGemini,
 } from "@/Icons/Icons";
 
 const platformIcons: Record<string, React.ComponentType<{ width?: number }>> = {
@@ -263,24 +267,40 @@ export default function PromptDetailPage() {
                   </Button>
                 ) : (
                   <div className="ppd-quick-send">
-                    <button onClick={() => handleSendClick("chatgpt")} className="quick-send-btn quick-send-btn--green" title="Send to ChatGPT">
-                      <LucideBot width={14} />
+                    <button onClick={() => handleSendClick("chatgpt")} className="quick-send-btn quick-send-btn--white" title="Send to ChatGPT">
+                      <HugeiconsChatGpt width={24} />
                     </button>
-                    <button onClick={() => handleSendClick("deepseek")} className="quick-send-btn quick-send-btn--teal" title="Send to DeepSeek">
-                      <LucideBrain width={14} />
+                    <button onClick={() => handleSendClick("deepseek")} className="quick-send-btn quick-send-btn--blue" title="Send to DeepSeek">
+                      <HugeiconsDeepseek width={24} />
                     </button>
                     <button onClick={() => handleSendClick("claude")} className="quick-send-btn quick-send-btn--orange" title="Send to Claude">
-                      <LucideSparkles width={14} />
+                      <HugeiconsClaude width={24} />
                     </button>
                     <button onClick={() => handleSendClick("gemini")} className="quick-send-btn quick-send-btn--blue" title="Send to Gemini">
-                      <LucideGem width={14} />
+                      <HugeiconsGoogleGemini width={24} />
                     </button>
                   </div>
                 )}
 
-                <Button variant="secondary" leftIcon={LucideLayers} onClick={() => setCloneOpen(true)}>Clone</Button>
-                <Button variant="secondary" leftIcon={LucidePencil} onClick={() => handleEdit(item)}>Edit</Button>
-                <Button variant="danger" leftIcon={LucideTrash2} onClick={() => setConfirmDelete(true)}>Delete</Button>
+                <details className="ppd-action-menu">
+                  <summary className="ppd-action-menu-trigger" aria-label="More prompt actions">
+                    <LucideMoreHorizontal width={16} />
+                  </summary>
+                  <div className="ppd-action-menu-popover">
+                    <button type="button" className="ppd-action-menu-item" onClick={() => setCloneOpen(true)}>
+                      <LucideLayers width={14} />
+                      Clone
+                    </button>
+                    <button type="button" className="ppd-action-menu-item" onClick={() => handleEdit(item)}>
+                      <LucidePencil width={14} />
+                      Edit
+                    </button>
+                    <button type="button" className="ppd-action-menu-item ppd-action-menu-item--danger" onClick={() => setConfirmDelete(true)}>
+                      <LucideTrash2 width={14} />
+                      Delete
+                    </button>
+                  </div>
+                </details>
               </div>
             </div>
 
@@ -495,7 +515,7 @@ const CSS = `
 /* Head */
 .ppd-head {
   display: flex; align-items: flex-start; justify-content: space-between;
-  gap: 16px; flex-wrap: wrap;
+  gap: 20px; flex-wrap: wrap;
 }
 .ppd-head-main { display: flex; flex-direction: column; gap: 8px; min-width: 0; flex: 1; }
 .ppd-head-badges { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
@@ -509,18 +529,64 @@ const CSS = `
 }
 .ppd-fav-chip:hover { border-color: var(--border-strong); color: var(--text-secondary); }
 .ppd-fav-chip--active { background: var(--warning-muted); border-color: rgba(245,158,11,0.3); color: #fbbf24; }
-.ppd-title { font-size: var(--text-2xl); font-weight: 700; color: var(--text-primary); margin: 0; }
+.ppd-title { font-size: clamp(var(--text-xl), 2vw, var(--text-3xl)); font-weight: 700; color: var(--text-primary); margin: 0; letter-spacing: -0.02em; }
 .ppd-desc  { font-size: var(--text-sm); color: var(--text-secondary); margin: 0; line-height: var(--leading-relaxed); }
-.ppd-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; flex-shrink: 0; }
+.ppd-actions { display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; flex-shrink: 0; }
+.ppd-action-menu { position: relative; flex-shrink: 0; }
+.ppd-action-menu-trigger {
+  display: flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px;
+  background: var(--bg-overlay); border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  cursor: pointer;
+  list-style: none;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+.ppd-action-menu-trigger::-webkit-details-marker { display: none; }
+.ppd-action-menu-trigger:hover { background: var(--bg-subtle); border-color: var(--border-strong); }
+.ppd-action-menu[open] .ppd-action-menu-trigger { background: var(--bg-subtle); border-color: var(--border-strong); }
+.ppd-action-menu-popover {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 20;
+  min-width: 156px;
+  padding: 6px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+}
+.ppd-action-menu-item {
+  display: flex; align-items: center; gap: 8px;
+  width: 100%;
+  height: 32px;
+  padding: 0 10px;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: var(--text-sm);
+  text-align: left;
+  cursor: pointer;
+}
+.ppd-action-menu-item:hover { background: var(--bg-overlay); color: var(--text-primary); }
+.ppd-action-menu-item--danger { color: var(--danger); }
+.ppd-action-menu-item--danger:hover { background: var(--danger-muted); color: var(--danger); }
 
 .ppd-alert { margin-top: 8px; }
 
 /* Layout */
 .ppd-layout {
   display: grid;
-  grid-template-columns: minmax(0,1fr) 290px;
+  grid-template-columns: minmax(0,1fr) 310px;
   gap: 24px;
   align-items: start;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 @media (max-width: 860px) {
   .ppd-layout { grid-template-columns: 1fr; }
@@ -531,23 +597,26 @@ const CSS = `
 /* Content block */
 .ppd-content-block {
   background: var(--bg-surface); border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg); overflow: hidden;
+  border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm);
 }
 .ppd-content-bar {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 8px 14px; border-bottom: 1px solid var(--border-subtle);
+  min-height: 38px; padding: 8px 16px; border-bottom: 1px solid var(--border-subtle);
   background: var(--bg-elevated);
 }
-.ppd-content-bar-label { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-tertiary); }
-.ppd-content-scroll { max-height: 60vh; overflow-y: auto; }
+.ppd-content-bar-label { font-size: var(--text-xs); font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.06em; }
+.ppd-content-scroll { max-height: min(64vh, 720px); overflow-y: auto; background: var(--code-bg); }
 .ppd-content-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
 .ppd-content-scroll::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 99px; }
 .ppd-content-text {
-  margin: 0; padding: 14px;
+  margin: 0; padding: 20px;
   font-family: var(--font-mono, monospace);
   font-size: var(--text-sm);
-  color: #e2e8f0;
-  background: #1e1e2e;
+  line-height: 1.75;
+  color: var(--ct-fg);
+  background: var(--code-bg);
+  border: 0;
+  border-radius: 0;
   white-space: pre-wrap;
   word-break: break-word;
 }
@@ -590,10 +659,10 @@ const CSS = `
 .quick-send-btn:hover   { filter: brightness(0.9); transform: scale(1.1); }
 
 /* Sidebar */
-.ppd-sidebar { display: flex; flex-direction: column; gap: 16px; }
+.ppd-sidebar { display: flex; flex-direction: column; gap: 14px; }
 .ppd-meta-card {
   background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--radius-lg);
-  padding: 14px 16px; display: flex; flex-direction: column; gap: 10px;
+  padding: 16px; display: flex; flex-direction: column; gap: 11px; box-shadow: var(--shadow-sm);
 }
 .ppd-meta-title {
   font-size: var(--text-xs); font-weight: 600; color: var(--text-tertiary);
@@ -602,7 +671,8 @@ const CSS = `
 }
 .ppd-meta-title-row { display: flex; align-items: center; justify-content: space-between; }
 .ppd-meta-title-row .ppd-meta-title { margin: 0; }
-.ppd-meta-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: var(--text-sm); }
+.ppd-meta-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: var(--text-sm); padding-bottom: 9px; border-bottom: 1px solid var(--border-subtle); }
+.ppd-meta-row:last-child { padding-bottom: 0; border-bottom: 0; }
 .ppd-meta-key { color: var(--text-tertiary); }
 .ppd-meta-val { color: var(--text-primary); font-weight: 500; text-align: right; display: flex; align-items: center; gap: 4px; justify-content: flex-end; }
 
@@ -654,7 +724,7 @@ const CSS = `
   font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-secondary);
   line-height: var(--leading-relaxed); white-space: pre-wrap; word-break: break-word;
   display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
-  margin: 0;
+  margin: 0; padding: 0; background: transparent; border: 0;
 }
 .ppd-version-restore {
   display: inline-flex; align-items: center; gap: 5px; align-self: flex-start;
@@ -673,4 +743,51 @@ const CSS = `
   animation: ppd-skeleton-pulse 1.5s ease-in-out infinite;
 }
 @keyframes ppd-skeleton-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+@media (max-width: 639px) {
+  .ppd-crumbs > span:not(.ppd-crumb-current),
+  .ppd-crumbs > svg:first-of-type { display: none; }
+  .ppd-crumb-current { max-width: min(68vw, 260px); }
+  .ppd-head { gap: 12px; }
+  .ppd-head-main { gap: 6px; }
+  .ppd-title { font-size: var(--text-xl); line-height: 1.25; }
+  .ppd-desc { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+  .ppd-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr) 34px;
+    align-items: center;
+    gap: 6px;
+  }
+  .ppd-actions > .btn {
+    min-width: 0;
+    padding-inline: 6px;
+  }
+  .ppd-actions > .btn span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .ppd-quick-send {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+    width: 100%;
+  }
+  .ppd-action-menu { justify-self: end; }
+  .ppd-action-menu-popover { right: 0; }
+  .quick-send-btn { width: 100%; height: 34px; }
+  .ppd-layout { gap: 12px; }
+  .ppd-main, .ppd-sidebar { gap: 12px; }
+  .ppd-content-block, .ppd-panel, .ppd-meta-card { border-radius: var(--radius-md); box-shadow: none; }
+  .ppd-content-scroll {
+    max-height: min(42dvh, 320px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .ppd-content-text { padding: 14px; font-size: var(--text-xs); line-height: 1.65; }
+  .ppd-panel, .ppd-meta-card { padding: 13px; }
+  .ppd-vars-row { align-items: flex-start; }
+  .ppd-var-value { white-space: normal; overflow-wrap: anywhere; max-width: 55%; }
+}
 `;

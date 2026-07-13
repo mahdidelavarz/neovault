@@ -283,6 +283,7 @@ const CSS = `
 /* Mobile: tighten spacing so cards fit narrow screens */
 @media (max-width: 639px) {
   .ic         { padding: 12px; gap: 10px; }
-  .ic-code    { max-height: 160px; }
+  .ic-code    { max-height: 112px; overflow-y: auto; }
+  .ic-footer  { padding-top: 10px; }
 }
 `;

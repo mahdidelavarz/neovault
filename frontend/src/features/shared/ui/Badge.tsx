@@ -125,10 +125,10 @@ const CSS = `
 
 /* Light mode — darker text for readability on white */
 [data-theme="light"] .badge--cyan    { color: var(--text-accent); }
-[data-theme="light"] .badge--success { color: #059669; }
-[data-theme="light"] .badge--warning { color: #d97706; }
-[data-theme="light"] .badge--danger  { color: #dc2626; }
-[data-theme="light"] .badge--purple  { color: #7c3aed; }
-[data-theme="light"] .badge--orange  { color: #ea580c; }
-[data-theme="light"] .badge--pink    { color: #db2777; }
+[data-theme="light"] .badge--success { color: var(--success); }
+[data-theme="light"] .badge--warning { color: var(--warning); }
+[data-theme="light"] .badge--danger  { color: var(--danger); }
+[data-theme="light"] .badge--purple  { color: #6d28d9; }
+[data-theme="light"] .badge--orange  { color: #c2410c; }
+[data-theme="light"] .badge--pink    { color: #be185d; }
 `
