@@ -35,6 +35,10 @@ import {
   LucideBrain,
   LucideSparkles,
   LucideGem,
+  HugeiconsChatGpt,
+  HugeiconsDeepseek,
+  HugeiconsClaude,
+  HugeiconsGoogleGemini,
 } from "@/Icons/Icons";
 
 interface PromptCardProps {
@@ -252,31 +256,31 @@ export default function PromptCard({ prompt }: PromptCardProps) {
             <div className="prompt-card-quick-send">
               <button
                 onClick={(e) => handleSendClick(e, "chatgpt")}
-                className="quick-send-btn quick-send-btn--green"
+                className="quick-send-btn quick-send-btn--white"
                 title="Send to ChatGPT"
               >
-                <LucideBot width={14} />
+                <HugeiconsChatGpt width={24} />
               </button>
               <button
                 onClick={(e) => handleSendClick(e, "deepseek")}
-                className="quick-send-btn quick-send-btn--teal"
+                className="quick-send-btn quick-send-btn--blue"
                 title="Send to DeepSeek"
               >
-                <LucideBrain width={14} />
+                <HugeiconsDeepseek width={24} />
               </button>
               <button
                 onClick={(e) => handleSendClick(e, "claude")}
                 className="quick-send-btn quick-send-btn--orange"
                 title="Send to Claude"
               >
-                <LucideSparkles width={14} />
+                <HugeiconsClaude width={24} />
               </button>
               <button
                 onClick={(e) => handleSendClick(e, "gemini")}
-                className="quick-send-btn quick-send-btn--blue"
+                className="quick-send-btn quick-send-btn--teal"
                 title="Send to Gemini"
               >
-                <LucideGem width={14} />
+                <HugeiconsGoogleGemini width={24} />
               </button>
             </div>
           )}
@@ -451,7 +455,7 @@ const CSS = `
 /* Quick send */
 .prompt-card-quick-send {
   display: flex;
-  gap:     2px;
+  gap:     8px;
 }
 .quick-send-btn {
   display:         flex;
