@@ -1,38 +1,23 @@
-version: '3.8'
+name: neovault
 
 services:
-  postgres:
-    image: postgres:16-alpine
-    environment:
-      POSTGRES_USER: ${DB_USERNAME:-node_user}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-123}
-      POSTGRES_DB: ${DB_DATABASE:-linkvault}
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U node_user -d linkvault"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-    restart: unless-stopped
-
   backend:
     build:
       context: .
       dockerfile: backend/Dockerfile
+    container_name: neovault-backend
     env_file:
       - .env
     environment:
       NODE_ENV: production
       PORT: 5000
-      DB_HOST: postgres
+      # اتصال به دیتابیس مرکزی
+      DB_HOST: main-postgres
       DB_PORT: 5432
       DB_SYNCHRONIZE: "false"
-    depends_on:
-      postgres:
-        condition: service_healthy
+    networks:
+      - default
+      - shared-network
     restart: unless-stopped
 
   frontend:
@@ -41,6 +26,7 @@ services:
       dockerfile: frontend/Dockerfile
       args:
         BACKEND_INTERNAL_URL: http://backend:5000
+    container_name: neovault-frontend
     environment:
       BACKEND_INTERNAL_URL: http://backend:5000
       NODE_ENV: production
@@ -51,6 +37,7 @@ services:
 
   nginx:
     image: nginx:alpine
+    container_name: neovault-nginx
     ports:
       - "80:80"
       - "443:443"
@@ -65,9 +52,8 @@ services:
       - web-proxy
     restart: unless-stopped
 
-volumes:
-  postgres_data:
-
 networks:
   web-proxy:
+    external: true
+  shared-network:
     external: true
